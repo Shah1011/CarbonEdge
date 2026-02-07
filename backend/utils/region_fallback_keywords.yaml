@@ -1,0 +1,61 @@
+US:
+  - us-
+  - eastus
+  - westus
+  - centralus
+  - virginia
+  - california
+  - oregon
+  - iowa
+  - US West (Oregon)
+  - US East (N. Virginia)
+  - US East (Ohio)
+  - US West (N. California)
+  - US Central
+  - US
+MY:
+  - malaysia
+  - malaysiawest
+  - Malaysia West
+IE:
+  - ireland
+  - northeurope
+DE:
+  - germany
+  - frankfurt
+GB:
+  - uk
+  - london
+  - britain
+FR:
+  - france
+  - paris
+NL:
+  - netherlands
+  - holland
+BE:
+  - belgium
+SG:
+  - singapore
+HK:
+  - hong kong
+  - hongkong
+JP:
+  - japan
+  - tokyo
+KR:
+  - korea
+  - seoul
+IN:
+  - india
+  - mumbai
+AU:
+  - australia
+  - sydney
+TW:
+  - taiwan
+CA:
+  - canada
+ZA:
+  - south africa
+  - africa
