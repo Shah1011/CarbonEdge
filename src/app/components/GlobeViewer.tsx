@@ -16,7 +16,7 @@ export default function GlobeViewer({ selectedRegion, carbonData }: GlobeViewerP
   const globeRef = useRef<any>(null);
   const [globeReady, setGlobeReady] = useState(false);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [regionScreenPos, setRegionScreenPos] = useState<{ x: number; y: number } | null>(null);
+  
   // Focus globe on selected region when it changes
   // Handle auto-rotation and focus logic
   useEffect(() => {
@@ -41,19 +41,6 @@ export default function GlobeViewer({ selectedRegion, carbonData }: GlobeViewerP
     if (selectedRegion && typeof globe.pointOfView === "function") {
       globe.pointOfView({ lat: selectedRegion.lat, lng: selectedRegion.lng, altitude: 2 }, 1000);
       console.log("[GlobeViewer] Focusing on region", selectedRegion);
-      
-      // Calculate screen position of the region after focusing
-      setTimeout(() => {
-        if (typeof globe.getScreenCoords === "function") {
-          const screenCoords = globe.getScreenCoords(selectedRegion.lat, selectedRegion.lng);
-          if (screenCoords) {
-            setRegionScreenPos({ x: screenCoords.x, y: screenCoords.y });
-            console.log("[GlobeViewer] Region screen position:", screenCoords);
-          }
-        }
-      }, 1100); // Wait for focus animation to complete
-    } else {
-      setRegionScreenPos(null);
     }
   }, [selectedRegion, globeReady]);
 
@@ -143,56 +130,6 @@ export default function GlobeViewer({ selectedRegion, carbonData }: GlobeViewerP
             console.log('[GlobeViewer] Globe is now ready');
           }}
         />
-      )}
-      {/* Carbon Data Display */}
-      {selectedRegion && carbonData && (
-        <div className="absolute top-6 right-6 bg-black bg-opacity-80 text-white p-2 rounded-md shadow-lg max-w-xs text-xs" style={{ minWidth: '160px' }}>
-          <div className="relative">
-            {/* Dynamic Pointer line */}
-            {regionScreenPos && (
-              <>
-                <svg
-                  className="absolute -z-10"
-                  style={{
-                    width: '500px',
-                    height: '500px',
-                    top: '50%',
-                    right: '100%',
-                    transform: 'translate(0, -50%)',
-                  }}
-                >
-                  <line
-                    x1="400"
-                    y1="200"
-                    x2={Math.max(0, Math.min(400, regionScreenPos.x - dimensions.width * 0.5 + 200))}
-                    y2={Math.max(0, Math.min(400, regionScreenPos.y - 32 + 200))}
-                    stroke="white"
-                    strokeWidth="2"
-                  />
-                  <circle
-                    cx={Math.max(0, Math.min(400, regionScreenPos.x - dimensions.width * 0.5 + 200))}
-                    cy={Math.max(0, Math.min(400, regionScreenPos.y - 32 + 200))}
-                    r="4"
-                    fill="white"
-                  />
-                </svg>
-              </>
-            )}
-            
-            {/* Carbon Data Content */}
-            <div className="space-y-1 text-xs">
-              <div className="font-bold text-base mb-1 text-center border-b border-gray-400 pb-1">
-                {carbonData.region || 'Unknown Region'}
-              </div>
-              <div><span className="font-semibold">Provider:</span> <span className="text-gray-300">{carbonData.provider}</span></div>
-              <div className="font-semibold text-green-500 text-center text-lg">
-                {carbonData.co2_grams_per_hour !== 'N/A' 
-                  ? `${parseFloat(carbonData.co2_grams_per_hour).toFixed(2)} g CO₂/hour` 
-                  : 'CO₂ data not available'}
-              </div>
-            </div>
-          </div>
-        </div>
       )}
     </div>
   );

@@ -1,0 +1,105 @@
+cloud_regions:
+
+  aws:
+    us-east-1: "US East (N. Virginia)"
+    us-east-2: "US East (Ohio)"
+    us-west-1: "US West (N. California)"
+    us-west-2: "US West (Oregon)"
+
+    af-south-1: "Africa (Cape Town)"
+
+    ap-east-1: "Asia Pacific (Hong Kong)"
+    ap-south-1: "Asia Pacific (Mumbai)"
+    ap-south-2: "Asia Pacific (Hyderabad)"
+    # ap-southeast-1: "Asia Pacific (Singapore)"
+    ap-southeast-2: "Asia Pacific (Sydney)"
+    ap-southeast-4: "Asia Pacific (Melbourne)"
+
+    ap-northeast-1: "Asia Pacific (Tokyo)"
+    ap-northeast-2: "Asia Pacific (Seoul)"
+
+    ca-central-1: "Canada (Central)"
+    ca-west-1: "Canada (Calgary)"
+
+    eu-central-1: "Europe (Frankfurt)"
+    eu-central-2: "Europe (Zurich)"
+    eu-west-1: "Europe (Ireland)"
+    eu-west-2: "Europe (London)"
+    eu-west-3: "Europe (Paris)"
+
+    me-central-1: "Middle East (UAE)"
+
+    # cn-north-1: "China (Beijing)"
+    # cn-northwest-1: "China (Ningxia)"
+    # us-gov-west-1: "AWS GovCloud (US-West)"
+
+  azure:
+    eastus2: "East US 2 (Virginia)"
+    westus: "West US (California)"
+    westus2: "West US 2 (Washington)"
+    centralus: "Central US (Iowa)"
+
+    southafricanorth: "South Africa North (Johannesburg)"
+
+    eastasia: "East Asia (Hong Kong)"
+    # westindia: "West India (Mumbai)"
+    centralindia: "Central India (Pune)"
+    southeastasia: "Southeast Asia (Singapore)"
+    # malaysiawest: "Malaysia West (Kuala Lumpur)"
+    # germanynorth: "Germany North (Berlin)"
+    australiaeast: "Australia East (Sydney)"
+    australiasoutheast: "Australia Southeast (Melbourne)"
+
+    japaneast: "Japan East (Tokyo)"
+    koreacentral: "Korea Central (Seoul)"
+
+    canadacentral: "Canada Central (Toronto)"
+    canadaeast: "Canada East (Quebec)"
+
+    germanywestcentral: "Germany West Central (Frankfurt)"
+    switzerlandnorth: "Switzerland North (Zurich)"
+    northeurope: "North Europe (Ireland)"
+    uksouth: "UK South (London)"
+    francecentral: "France Central (Paris)"
+  
+    norwayeast: "Norway East (Oslo)"
+    # brazilsoutheast: "Brazil Southeast (Rio de Janeiro)"
+    ukwest: "UK West (Cardiff)"
+
+    uaenorth: "UAE North (Dubai)"
+
+  gcp:
+    us-east1: "US East (South Carolina)"
+    us-east4: "US East (Northern Virginia)"
+    us-central1: "US Central (Iowa)"
+    us-west1: "US West (Oregon)"
+    us-west2: "US West (Los Angeles)"
+    # us-west3: "US West (Salt Lake City)"
+    # us-west4: "US West (Nevada)"
+    # northamerica-northeast1: "Canada (Montreal)"
+    northamerica-northeast2: "Canada (Toronto)"
+    # southamerica-east1: "South America (São Paulo)"
+    southamerica-west1: "South America (Chile)"
+    europe-west1: "Europe (Belgium)"
+    # europe-west2: "Europe (London)"
+    europe-west3: "Europe (Frankfurt)"
+    europe-west4: "Europe (Netherlands)"
+    # europe-west6: "Europe (Zurich)"
+    # europe-west8: "Europe (Milan)"
+    # europe-west9: "Europe (Paris)"
+    europe-north1: "Europe (Finland)"
+    # europe-central2: "Europe (Warsaw)"
+    # asia-south1: "Asia South (Mumbai)"
+    # asia-south2: "Asia South (Delhi)"
+    asia-southeast1: "Asia Southeast (Singapore)"
+    # asia-southeast2: "Asia Southeast (Jakarta)"
+    asia-east1: "Asia East (Taiwan)"
+    # asia-east2: "Asia East (Hong Kong)"
+    asia-northeast1: "Asia Northeast (Tokyo)"
+    # asia-northeast2: "Asia Northeast (Osaka)"
+    # asia-northeast3: "Asia Northeast (Seoul)"
+    # australia-southeast1: "Australia Southeast (Sydney)"
+    # australia-southeast2: "Australia Southeast (Melbourne)"
+    # middleeast-west1: "Middle East (Tel Aviv)"
+    # middleeast-central1: "Middle East (Doha)"
+    # africa-south1: "Africa (Johannesburg)"

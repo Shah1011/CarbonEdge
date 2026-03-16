@@ -53,6 +53,17 @@ def add_carbon_emissions_to_instance(instance, utilization: float = 0.5):
             "zone_used": zone,
             "error": str(e)
         }
+
+    # ── TFT-based carbon forecast (graceful if model not available) ──────
+    try:
+        from ml.predict import get_carbon_forecast_summary
+        provider = instance.get("provider", "")
+        forecast_summary = get_carbon_forecast_summary(provider, region)
+        if forecast_summary:
+            instance["carbon_forecast"] = forecast_summary
+    except Exception:
+        pass  # ML module not installed / model not trained – skip silently
+
     return instance
 
 def get_electricitymap_zone(region):
