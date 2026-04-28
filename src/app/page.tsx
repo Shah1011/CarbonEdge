@@ -126,7 +126,7 @@ function ModeToggle({ mode, setMode }: { mode: AppMode; setMode: (m: AppMode) =>
       <button
         type="button"
         onClick={() => setMode("decision")}
-        className={`flex-1 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
+        className={`flex-1 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
           mode === "decision"
             ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/25"
             : "text-slate-400 hover:text-white hover:bg-slate-700/50"
@@ -142,7 +142,7 @@ function ModeToggle({ mode, setMode }: { mode: AppMode; setMode: (m: AppMode) =>
       <button
         type="button"
         onClick={() => setMode("forecast")}
-        className={`flex-1 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
+        className={`flex-1 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
           mode === "forecast"
             ? "bg-gradient-to-r from-emerald-600 to-emerald-500 text-white shadow-lg shadow-emerald-500/25"
             : "text-slate-400 hover:text-white hover:bg-slate-700/50"
@@ -340,7 +340,7 @@ function ResultCard({
       <div className="flex gap-2">
         <button
           onClick={onClick}
-          className="flex-1 px-3 py-2 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-slate-300 hover:text-white text-sm font-medium transition-all flex items-center justify-center gap-2"
+          className="hidden md:flex flex-1 px-3 py-2 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-slate-300 hover:text-white text-sm font-medium transition-all items-center justify-center gap-2"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -447,7 +447,7 @@ function ForecastRegionCard({
       <div className="flex gap-2">
         <button
           onClick={onClick}
-          className="flex-1 px-3 py-2 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-slate-300 hover:text-white text-sm font-medium transition-all flex items-center justify-center gap-2"
+          className="hidden md:flex flex-1 px-3 py-2 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-slate-300 hover:text-white text-sm font-medium transition-all items-center justify-center gap-2"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -499,6 +499,7 @@ export default function Home(): JSX.Element {
   const [forecastRegions, setForecastRegions] = useState<ForecastRegionSummary[]>([]);
   const [forecastRegionsLoading, setForecastRegionsLoading] = useState(false);
   const [forecastLoadingProgress, setForecastLoadingProgress] = useState(0);
+  const [mobileShowGlobe, setMobileShowGlobe] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -508,7 +509,7 @@ export default function Home(): JSX.Element {
   const fetchForecast = async (provider: string, region: string) => {
     setForecastLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/api/forecast", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/forecast`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ provider, region }),
@@ -537,12 +538,12 @@ export default function Home(): JSX.Element {
       const progressInterval = setInterval(() => {
         setForecastLoadingProgress(prev => {
           if (prev >= 90) return prev;
-          return prev + Math.random() * 15;
+          return Math.min(90, prev + Math.random() * 15);
         });
       }, 200);
 
       const selectedProviders = (Object.keys(form.providers) as Array<keyof ProviderFlags>).filter((p) => form.providers[p]);
-      const res = await fetch("http://localhost:8000/api/forecasts/all", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/forecasts/all`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ providers: selectedProviders }),
@@ -597,11 +598,11 @@ export default function Home(): JSX.Element {
       const progressInterval = setInterval(() => {
         setLoadingProgress(prev => {
           if (prev >= 90) return prev;
-          return prev + Math.random() * 15;
+          return Math.min(90, prev + Math.random() * 15);
         });
       }, 200);
 
-      const res = await fetch("http://localhost:8000/api/pricing", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/pricing`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ vcpus, ram, storage: form.storage, utilization: form.utilization / 100 }),
@@ -658,6 +659,8 @@ export default function Home(): JSX.Element {
         carbon_emissions: instance.carbon_emissions,
         co2_grams_per_hour: instance.carbon_emissions?.co2_grams_per_hour || "N/A",
       });
+      // On mobile, show globe when region is selected
+      if (window.innerWidth < 768) setMobileShowGlobe(true);
     }
   };
 
@@ -666,7 +669,7 @@ export default function Home(): JSX.Element {
     setShowForecastModal(true);
     setForecastData(null);
     try {
-      const res = await fetch("http://localhost:8000/api/forecast", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/forecast`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ provider, region }),
@@ -692,6 +695,7 @@ export default function Home(): JSX.Element {
         provider: fr.provider.toUpperCase(),
         co2_grams_per_hour: `${fr.summary.forecast_avg_gCO2} ${fr.summary.unit} (7d avg)`,
       });
+      if (window.innerWidth < 768) setMobileShowGlobe(true);
     }
   };
 
@@ -736,27 +740,64 @@ export default function Home(): JSX.Element {
   if (!mounted) return <div className="w-screen h-screen bg-slate-900" />;
 
   return (
-    <div className="flex w-screen h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
-      {/* Left Panel */}
-      <div className="w-[480px] min-w-[420px] flex flex-col h-full border-r border-slate-800/50 bg-slate-900/30 backdrop-blur-xl">
+    <div className="flex flex-col md:flex-row w-screen h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden relative">
+      {/* Globe Background (mobile: full-screen behind panel, desktop: right panel) */}
+      <div className={`
+        ${mobileShowGlobe ? 'fixed inset-0 z-30' : 'fixed inset-0 z-0 pointer-events-none'}
+        md:relative md:flex-1 md:flex md:items-center md:justify-center md:overflow-hidden md:pointer-events-auto md:z-auto
+      `}>
+        <GlobeViewer selectedRegion={selectedRegion} carbonData={selectedCarbonData} />
+        {/* Mobile globe close button */}
+        {mobileShowGlobe && (
+          <button
+            onClick={() => setMobileShowGlobe(false)}
+            className="md:hidden fixed top-4 right-4 z-40 p-3 bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-full text-white shadow-lg"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
+      </div>
+
+      {/* Mobile Globe Toggle FAB */}
+      {!mobileShowGlobe && (
+        <button
+          onClick={() => setMobileShowGlobe(true)}
+          className="md:hidden fixed bottom-6 right-6 z-40 p-4 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full text-white shadow-lg shadow-emerald-500/30 active:scale-95 transition-transform"
+        >
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </button>
+      )}
+
+      {/* Left Panel (mobile: full-width overlay, desktop: sidebar) */}
+      <div className={`
+        ${mobileShowGlobe ? 'hidden' : 'flex'}
+        w-full md:w-[480px] md:min-w-[420px] md:flex flex-col h-full
+        border-b md:border-b-0 md:border-r border-slate-800/50
+        bg-slate-900/80 md:bg-slate-900/30 backdrop-blur-xl
+        relative z-10
+      `}>
         {/* Header */}
-        <div className="px-6 py-5 border-b border-slate-800/50">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/25">
-              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-slate-800/50">
+          <div className="flex items-center gap-3 mb-3 sm:mb-4">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/25 flex-shrink-0">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-white">CarbonEdge</h1>
-              <p className="text-xs text-slate-500">Multi Cloud Cost & Eco Efficiency Optimization</p>
+            <div className="min-w-0">
+              <h1 className="text-lg sm:text-xl font-bold text-white">CarbonEdge</h1>
+              <p className="text-[10px] sm:text-xs text-slate-500 truncate">Multi Cloud Cost & Eco Efficiency Optimization</p>
             </div>
           </div>
           <ModeToggle mode={appMode} setMode={setAppMode} />
         </div>
 
         {/* Scrollable Content */}
-        <div className={`flex-1 px-6 py-4 ${!showForm ? 'overflow-y-auto' : ''}`}>
+        <div className={`flex-1 px-4 sm:px-6 py-4 ${!showForm ? 'overflow-y-auto' : ''}`}>
           {showForm ? (
             <form onSubmit={appMode === "decision" ? handleSubmit : (e) => { e.preventDefault(); fetchAllForecasts(); }} className="space-y-5">
               {appMode === "decision" ? (
@@ -992,11 +1033,6 @@ export default function Home(): JSX.Element {
         </div>
       </div>
 
-      {/* Right Panel - Globe */}
-      <div className="flex-1 flex items-center justify-center relative overflow-hidden">
-        <GlobeViewer selectedRegion={selectedRegion} carbonData={selectedCarbonData} />
-      </div>
-
       {/* Forecast Modal */}
       {showForecastModal && (
         <div 
@@ -1007,13 +1043,13 @@ export default function Home(): JSX.Element {
           }}
         >
           <div 
-            className="relative w-[90vw] max-w-6xl h-[85vh] bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl flex flex-col"
+            className="relative w-full h-full sm:w-[90vw] sm:max-w-6xl sm:h-[85vh] bg-slate-900 border border-slate-800 sm:rounded-2xl shadow-2xl flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="flex items-start justify-between p-6 border-b border-slate-800">
-              <div>
-                <h3 className="text-2xl font-bold text-white">Carbon Intensity Forecast</h3>
+            <div className="flex items-start justify-between p-4 sm:p-6 border-b border-slate-800">
+              <div className="min-w-0 flex-1">
+                <h3 className="text-lg sm:text-2xl font-bold text-white">Carbon Intensity Forecast</h3>
                 {forecastData && (
                   <>
                     <p className="text-sm text-slate-400 mt-1">
@@ -1040,7 +1076,7 @@ export default function Home(): JSX.Element {
             </div>
 
             {/* Modal Content */}
-            <div className="flex-1 overflow-hidden p-6">
+            <div className="flex-1 overflow-hidden p-4 sm:p-6">
               {forecastLoading ? (
                 <div className="h-full flex flex-col items-center justify-center gap-4">
                   <svg className="animate-spin w-12 h-12 text-emerald-500" fill="none" viewBox="0 0 24 24">

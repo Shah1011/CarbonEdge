@@ -51,10 +51,11 @@ export default function GlobeViewer({ selectedRegion, carbonData }: GlobeViewerP
   }, [dimensions]);
 
   useEffect(() => {
-    // Set initial dimensions on client
+    // Set initial dimensions on client — full width on mobile, half on desktop
     const updateDimensions = () => {
+      const isMobile = window.innerWidth < 768;
       setDimensions({
-        width: window.innerWidth * 0.5,
+        width: isMobile ? window.innerWidth : window.innerWidth * 0.5,
         height: window.innerHeight,
       });
     };
@@ -116,7 +117,7 @@ export default function GlobeViewer({ selectedRegion, carbonData }: GlobeViewerP
   }, [globeReady]);
 
   return (
-    <div className="w-[50vw] h-screen max-w-full max-h-screen right-10 relative">
+    <div className="w-full h-screen max-w-full max-h-screen relative">
       {dimensions.width > 0 && dimensions.height > 0 && (
         <Globe
           ref={globeRef}

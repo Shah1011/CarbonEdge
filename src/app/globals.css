@@ -6,4 +6,24 @@
 html,
 body {
   background: #000011;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Thin scrollbar for panels */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 4px;
+}
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 4px;
+}
+
+/* Mobile touch improvements */
+@media (max-width: 767px) {
+  select, input, button {
+    font-size: 16px; /* prevent iOS zoom on focus */
+  }
 }

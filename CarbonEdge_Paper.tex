@@ -139,7 +139,7 @@ ML Forecasting & PyTorch, PyTorch & TFT for 7-day carbon \\
                & forecasting & \\
 \midrule
 Data Collection & Python scripts, & Hourly carbon data \\
-                & ElectricityMaps API & from 2022 to present \\
+                & ElectricityMap API & from 2022 to present \\
 \bottomrule
 \end{tabular}%
 }
@@ -265,7 +265,7 @@ The eco-optimized instance represents the Pareto-optimal trade-off that minimize
 
 \subsection{Carbon Intensity Data Collection}
 
-Historical carbon intensity data is collected from the ElectricityMaps API \cite{b9} using the past-range endpoint. The data collection pipeline has the following characteristics:
+Historical carbon intensity data is collected from the ElectricityMap API \cite{b9} using the past-range endpoint. The data collection pipeline has the following characteristics:
 
 \begin{itemize}
     \item \textbf{Time range:} January 1, 2022 to present ($\sim$3+ years).
@@ -395,7 +395,7 @@ The frontend is implemented as a Next.js 16 application using React 19 and Tailw
 
 \subsection{Dataset Statistics}
 
-The carbon intensity dataset comprises hourly readings collected from the ElectricityMaps API over a period of approximately three years (January 2022 to early 2025). After preprocessing, the dataset contains daily aggregated records spanning more than 60 provider-region groups, with over 1,100 time steps per group. Groups with fewer than 365 days of data are filtered out during quality control.
+The carbon intensity dataset comprises hourly readings collected from the ElectricityMap API over a period of approximately three years (January 2022 to early 2025). After preprocessing, the dataset contains daily aggregated records spanning more than 60 provider-region groups, with over 1,100 time steps per group. Groups with fewer than 365 days of data are filtered out during quality control.
 
 \subsection{Carbon Emission Comparison Across Regions}
 
@@ -508,7 +508,7 @@ The TFT model captures regional differences and temporal patterns in carbon inte
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\columnwidth]{figure_forecast.png}
-\caption{Sample 7-day carbon intensity forecast for \texttt{aws\_us-east-1}. Blue line: 30-day historical data. Green line: TFT median prediction. Shaded green band: 80\% prediction interval (P10--P90).}
+\caption{Sample 7-day carbon intensity forecast for \texttt{aws\_us-east-1}. The solid line represents the 30-day historical data. The dashed line indicates the TFT median prediction. The shaded region with dotted boundaries shows the 80\% prediction interval (P10–P90)}
 \label{fig:forecast}
 \end{figure}
 
@@ -541,7 +541,6 @@ Several limitations merit discussion:
 
 \textbf{Regional granularity:} Carbon intensity is mapped at the country level (e.g., both \texttt{us-east-1} and \texttt{us-east-2} map to \texttt{US}). Different grid interconnections within a country may have distinct carbon profiles. Finer-grained zone mapping would improve accuracy where data is available.
 
-\textbf{Scope:} The current system covers general-purpose VM instances. GPU instances, serverless platforms, containers, and storage-specific optimization are not addressed but represent important directions for future work.
 
 \subsection{Generalizability}
 
@@ -557,9 +556,11 @@ Experimental evaluation demonstrates that region selection alone can cause more 
 
 Future work includes: (a) extending the framework to GPU instances, serverless platforms, and container orchestration; (b) incorporating spot and preemptible instance pricing for additional cost savings; (c) integrating embodied carbon estimates for hardware lifecycle analysis; (d) enabling fine-grained sub-national carbon intensity mapping where data is available; and (e) developing automated scheduling agents that act on forecast recommendations to proactively shift workloads to greener regions.
 
-\section*{Acknowledgment}
+%═══════════════════════════════════════════════════════════════════════
+\section*{Code Availability}
+%═══════════════════════════════════════════════════════════════════════
 
-The authors acknowledge the ElectricityMap platform for providing carbon intensity data through their API, and the cloud providers (AWS, Azure, GCP) for their publicly accessible pricing APIs.
+The open-source implementation of CarbonEdge is publicly available at:\url{https://github.com/Shah1011/CarbonEdge}.
 
 \begin{thebibliography}{00}
 

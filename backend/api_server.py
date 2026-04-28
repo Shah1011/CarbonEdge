@@ -4,12 +4,15 @@ from pydantic import BaseModel
 from typing import Optional, List
 from engine import get_cloud_pricing_json
 
+import os
+
 app = FastAPI()
 
-# Allow CORS for local frontend
+# Allow CORS for frontend
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Change to your frontend URL in production
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
