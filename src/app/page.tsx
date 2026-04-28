@@ -740,7 +740,7 @@ export default function Home() {
   if (!mounted) return <div className="w-screen h-screen bg-slate-900" />;
 
   return (
-    <div className="flex flex-col md:flex-row w-screen h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden relative z-1">
+    <div className="flex flex-col md:flex-row w-screen h-screen overflow-hidden relative z-[1]">
       {/* Left Panel (mobile: full-width overlay, desktop: sidebar) */}
       <div className={`
         ${mobileShowGlobe ? 'hidden' : 'flex'}
@@ -1005,7 +1005,7 @@ export default function Home() {
       {/* Right Panel - Globe (mobile: fullscreen overlay, desktop: right side) */}
       <div className={`
         ${mobileShowGlobe ? 'fixed inset-0 z-30' : 'hidden'}
-        md:relative md:flex md:flex-1 md:items-center md:justify-center md:overflow-hidden md:z-auto
+        md:relative md:flex md:flex-1 md:items-center md:justify-end md:overflow-hidden md:z-auto
       `}>
         <GlobeViewer selectedRegion={selectedRegion} carbonData={selectedCarbonData} />
         {/* Mobile globe close button */}

@@ -117,7 +117,7 @@ export default function GlobeViewer({ selectedRegion, carbonData }: GlobeViewerP
   }, [globeReady]);
 
   return (
-    <div className="w-full h-screen max-w-full max-h-screen relative">
+    <div className="w-full h-screen max-w-full max-h-screen relative translate-x-[10%]">
       {dimensions.width > 0 && dimensions.height > 0 && (
         <Globe
           ref={globeRef}
