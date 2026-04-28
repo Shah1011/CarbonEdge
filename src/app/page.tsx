@@ -475,7 +475,7 @@ function ForecastRegionCard({
 // Main Component
 // ═══════════════════════════════════════════════════════════════════════════
 
-export default function Home(): JSX.Element {
+export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [form, setForm] = useState<FormState>({
     vcpuRam: "",
