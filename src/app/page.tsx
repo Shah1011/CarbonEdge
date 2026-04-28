@@ -740,38 +740,7 @@ export default function Home() {
   if (!mounted) return <div className="w-screen h-screen bg-slate-900" />;
 
   return (
-    <div className="flex flex-col md:flex-row w-screen h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden relative">
-      {/* Globe Background (mobile: full-screen behind panel, desktop: right panel) */}
-      <div className={`
-        ${mobileShowGlobe ? 'fixed inset-0 z-30' : 'fixed inset-0 z-0 pointer-events-none'}
-        md:relative md:flex-1 md:flex md:items-center md:justify-center md:overflow-hidden md:pointer-events-auto md:z-auto
-      `}>
-        <GlobeViewer selectedRegion={selectedRegion} carbonData={selectedCarbonData} />
-        {/* Mobile globe close button */}
-        {mobileShowGlobe && (
-          <button
-            onClick={() => setMobileShowGlobe(false)}
-            className="md:hidden fixed top-4 right-4 z-40 p-3 bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-full text-white shadow-lg"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        )}
-      </div>
-
-      {/* Mobile Globe Toggle FAB */}
-      {!mobileShowGlobe && (
-        <button
-          onClick={() => setMobileShowGlobe(true)}
-          className="md:hidden fixed bottom-6 right-6 z-40 p-4 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full text-white shadow-lg shadow-emerald-500/30 active:scale-95 transition-transform"
-        >
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </button>
-      )}
-
+    <div className="flex flex-col md:flex-row w-screen h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden relative z-1">
       {/* Left Panel (mobile: full-width overlay, desktop: sidebar) */}
       <div className={`
         ${mobileShowGlobe ? 'hidden' : 'flex'}
@@ -1032,6 +1001,37 @@ export default function Home() {
           )}
         </div>
       </div>
+
+      {/* Right Panel - Globe (mobile: fullscreen overlay, desktop: right side) */}
+      <div className={`
+        ${mobileShowGlobe ? 'fixed inset-0 z-30' : 'hidden'}
+        md:relative md:flex md:flex-1 md:items-center md:justify-center md:overflow-hidden md:z-auto
+      `}>
+        <GlobeViewer selectedRegion={selectedRegion} carbonData={selectedCarbonData} />
+        {/* Mobile globe close button */}
+        {mobileShowGlobe && (
+          <button
+            onClick={() => setMobileShowGlobe(false)}
+            className="md:hidden fixed top-4 right-4 z-40 p-3 bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-full text-white shadow-lg"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
+      </div>
+
+      {/* Mobile Globe Toggle FAB */}
+      {!mobileShowGlobe && (
+        <button
+          onClick={() => setMobileShowGlobe(true)}
+          className="md:hidden fixed bottom-6 right-6 z-40 p-4 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full text-white shadow-lg shadow-emerald-500/30 active:scale-95 transition-transform"
+        >
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </button>
+      )}
 
       {/* Forecast Modal */}
       {showForecastModal && (
